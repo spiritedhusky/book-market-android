@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "94462014147",
+    "project_id": "book-market-1f220",
+    "storage_bucket": "book-market-1f220.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:94462014147:android:20d207ba5aef28dd332876",
+        "android_client_info": {
+          "package_name": "com.husk.bookmarket"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "94462014147-vksl9b0kbjpbeljjo0ob4lbt34lc9jlu.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.husk.bookmarket",
+            "certificate_hash": "dfefc6c9815eb3831e7f8ff7e3e997766296e079"
+          }
+        },
+        {
+          "client_id": "94462014147-mn3hlq81m5lj5emdp4du5hdcmujdph3o.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvXU6GBMHWRhrtkvx9pBZrdYqCiHgelxU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "94462014147-mn3hlq81m5lj5emdp4du5hdcmujdph3o.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
