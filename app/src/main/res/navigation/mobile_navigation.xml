@@ -38,5 +38,11 @@
         android:id="@+id/navigation_add_post"
         android:name="com.husk.bookmarket.ui.home.AddPostFragment"
         android:label="Add Post"
-        tools:layout="@layout/fragment_add_post" />
+        tools:layout="@layout/fragment_add_post" >
+        <action
+            android:id="@+id/action_navigation_add_post_to_navigation_home"
+            app:destination="@id/navigation_home"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left" />
+    </fragment>
 </navigation>
