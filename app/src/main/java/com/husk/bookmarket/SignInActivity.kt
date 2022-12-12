@@ -1,3 +1,5 @@
+
+
 package com.husk.bookmarket
 
 import android.content.Intent
@@ -8,7 +10,10 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatDelegate
 import com.firebase.ui.auth.AuthUI
 import com.firebase.ui.auth.FirebaseAuthUIActivityResultContract
+import com.firebase.ui.auth.KickoffActivity.createIntent
 import com.firebase.ui.auth.data.model.FirebaseAuthUIAuthenticationResult
+import com.firebase.ui.auth.ui.email.EmailActivity.createIntent
+import com.firebase.ui.auth.ui.email.WelcomeBackEmailLinkPrompt.createIntent
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
@@ -36,6 +41,7 @@ class SignInActivity : AppCompatActivity() {
         val signInIntent = AuthUI.getInstance()
             .createSignInIntentBuilder()
             .setAvailableProviders(providers)
+            .setIsSmartLockEnabled(false)
             .build()
         signInLauncher.launch(signInIntent)
     }
@@ -66,12 +72,14 @@ class SignInActivity : AppCompatActivity() {
 
     private fun onSignInResult(result: FirebaseAuthUIAuthenticationResult) {
         val response = result.idpResponse
+        Log.e("Sign in", "Sign in complete")
         if (result.resultCode == AppCompatActivity.RESULT_OK) {
             // Successfully signed in
             val user = FirebaseAuth.getInstance().currentUser!!
             Log.d("Sign in", "Successfully logged in user ${user.displayName}")
             registerUser(user)
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, MainActivity::class.java));
+            finish();
         } else {
             Snackbar.make(
                 findViewById(android.R.id.content),
@@ -88,13 +96,13 @@ class SignInActivity : AppCompatActivity() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
 
         if (Firebase.auth.currentUser != null){
-            Log.d("Sign In", "current user: ${Firebase.auth.currentUser?.displayName}")
+            Log.e("Sign In", "current user: ${Firebase.auth.currentUser?.displayName}")
             startActivity(Intent(this, MainActivity::class.java))
+            finish()
             return
         }
 
         setContentView(R.layout.activity_sign_in)
-
         startSignIn()
     }
 }
