@@ -2,22 +2,98 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:background="#E6EEFA"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ui.chat.ChatFragment">
 
-    <TextView
-        android:id="@+id/text_profile"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp"
-        android:textAlignment="center"
-        android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="parent"
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/profile"
+        android:layout_width="160dp"
+        android:layout_height="160dp"
+        android:layout_marginTop="32dp"
+        android:src="@drawable/profile_icon"
+        app:civ_border_color="@color/black"
+        app:civ_border_width="5dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.floatingactionbutton.FloatingActionButton
+        android:id="@+id/floatingActionButton"
+        android:backgroundTint="@color/black"
+        app:tint="@color/white"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:contentDescription="Add Profile Photo"
+        android:clickable="true"
+        android:src="@drawable/ic_menu_gallery"
+        app:layout_constraintBottom_toBottomOf="@+id/profile"
+        app:layout_constraintEnd_toEndOf="@+id/profile" />
+
+    <EditText
+        android:id="@+id/editTextTextPersonName"
+        android:layout_width="wrap_content"
+        android:layout_height="56dp"
+        android:layout_marginTop="24dp"
+        android:background="@color/fui_transparent"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Anonymous Dawg"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/profile" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginEnd="16dp"
+        android:foregroundTint="@color/black"
+        android:hint="Confirm Password"
+        android:textColorHint="@color/black"
+        app:boxStrokeColor="@color/black"
+        app:hintTextColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editTextTextPersonName">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/outlinedTextField2"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
+        android:foregroundTint="@color/black"
+        android:hint="Confirm New Password (optional)"
+        app:hintTextColor = "@color/black"
+        app:boxStrokeColor="@color/black"
+        android:textColorHint = "@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/outlinedTextField">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="textPassword" />
+
+    </com.google.android.material.textfield.TextInputLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

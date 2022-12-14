@@ -8,7 +8,8 @@
     <androidx.cardview.widget.CardView
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="8dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         app:cardBackgroundColor="#E6EEFA"
         app:cardCornerRadius="20dp"
         app:contentPaddingBottom="16dp"
@@ -50,7 +51,7 @@
                 android:id="@+id/username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="TextView"
                 android:textColor="#000000"
@@ -68,7 +69,7 @@
                 android:layout_marginTop="16dp"
                 android:text="Oliver Twist"
                 android:textColor="#000000"
-                android:textSize="14sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
                 app:layout_constraintStart_toStartOf="@+id/profileImage"
                 app:layout_constraintTop_toBottomOf="@+id/username" />
@@ -80,7 +81,7 @@
                 android:layout_marginStart="16dp"
                 android:text="TextView"
                 android:textColor="#000000"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookTitle"
                 tools:text="Charles Dickens" />
@@ -95,7 +96,7 @@
                 android:justificationMode="inter_word"
                 android:text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum."
                 android:textColor="#000000"
-                android:textSize="12sp"
+                android:textSize="16sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/bookAuthor" />
