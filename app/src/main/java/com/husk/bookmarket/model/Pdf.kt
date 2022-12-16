@@ -6,29 +6,31 @@ import com.google.firebase.Timestamp
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.DocumentSnapshot
 
-data class Post(
-    val postId: String,
+data class Pdf(
+    val pdfId: String,
+    val pdf: String,
     val posterId: String,
     val posterName: String,
     val posterAvatar: Uri?,
     val title: String,
-    val author: String,
     val description: String?,
+    val price: Double,
     val image: String?,
     val time: Timestamp
 ) {
     companion object Factory {
-        fun fromDoc(doc: DocumentSnapshot): Post {
+        fun fromDoc(doc: DocumentSnapshot): Pdf {
             var avatar: Uri? = null
             doc.getString("postAvatar")?.let { avatar = Uri.parse(it) }
-            return Post(
+            return Pdf(
                 doc.id,
+                doc.getString("pdf")!!,
                 doc.getString("posterId")!!,
                 doc.getString("posterName")!!,
                 avatar,
                 doc.getString("title")!!,
-                doc.getString("author")!!,
                 doc.getString("description"),
+                doc.getDouble("price") ?: 0.0,
                 doc.getString("image"),
                 doc.getTimestamp("timestamp")!!
             )
@@ -38,13 +40,14 @@ data class Post(
     fun toDoc(doc: DocumentReference): Task<Void> {
         return doc.set(
             mapOf(
-                "postId" to postId,
+                "pdfId" to pdfId,
+                "pdf" to pdf,
                 "posterId" to posterId,
                 "posterName" to posterName,
                 "posterAvatar" to posterAvatar,
                 "title" to title,
-                "author" to author,
                 "description" to description,
+                "price" to price,
                 "image" to image,
                 "timestamp" to Timestamp.now()
             )

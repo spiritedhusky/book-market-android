@@ -46,7 +46,7 @@ class HomeFragment : Fragment() {
 
         binding.recyclerView.adapter = adapter
 
-        registration = postsRef.orderBy("timestamp", Query.Direction.ASCENDING)
+        registration = postsRef.orderBy("timestamp", Query.Direction.DESCENDING)
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     Snackbar.make(
@@ -57,8 +57,8 @@ class HomeFragment : Fragment() {
                 } else {
                     for (dc in snapshots!!.documentChanges) {
                         if (dc.type == DocumentChange.Type.ADDED) {
-                            posts.add(0, Post.fromDoc(dc.document))
-                            adapter.notifyItemInserted(0)
+                            posts.add(Post.fromDoc(dc.document))
+                            adapter.notifyItemInserted(posts.size - 1)
                         }
                     }
                 }
@@ -71,5 +71,6 @@ class HomeFragment : Fragment() {
         super.onDestroyView()
         _binding = null
         registration.remove()
+        posts.clear()
     }
 }
