@@ -73,6 +73,33 @@
         android:label="PdfDetailFragment" >
         <action
             android:id="@+id/action_pdfDetailFragment2_to_navigation_pdf"
-            app:destination="@id/navigation_pdf" />
+            app:destination="@id/navigation_pdf"
+            app:enterAnim="@anim/nav_default_enter_anim" />
+        <action
+            android:id="@+id/action_pdfDetailFragment2_to_paymentFragment"
+            app:destination="@id/paymentFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left" />
+        <action
+            android:id="@+id/action_pdfDetailFragment2_to_pdfViewFragment"
+            app:destination="@id/pdfViewFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left" />
     </fragment>
+    <fragment
+        android:id="@+id/paymentFragment"
+        android:name="com.husk.bookmarket.ui.pdf.PaymentFragment"
+        android:label="fragment_payment"
+        tools:layout="@layout/fragment_payment" >
+        <action
+            android:id="@+id/action_paymentFragment_to_pdfDetailFragment2"
+            app:destination="@id/pdfDetailFragment2"
+            app:enterAnim="@anim/nav_default_enter_anim"
+            app:exitAnim="@anim/nav_default_exit_anim" />
+    </fragment>
+    <fragment
+        android:id="@+id/pdfViewFragment"
+        android:name="com.husk.bookmarket.ui.pdf.PdfViewFragment"
+        android:label="fragment_pdf_view"
+        tools:layout="@layout/fragment_pdf_view" />
 </navigation>

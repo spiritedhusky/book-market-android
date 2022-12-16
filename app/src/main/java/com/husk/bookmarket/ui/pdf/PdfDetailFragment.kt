@@ -8,7 +8,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.MutableLiveData
+import androidx.navigation.fragment.findNavController
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.husk.bookmarket.R
@@ -32,11 +36,8 @@ class PdfDetailFragment : Fragment() {
 
     private val viewModel: PdfViewModel by activityViewModels()
 
-    private val userOwnsBook = MutableLiveData<Boolean>().apply {
-        value = false
-    }
-
     private val storageRef = Firebase.storage.reference
+    private val dbRef = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
@@ -51,18 +52,38 @@ class PdfDetailFragment : Fragment() {
             Log.e("IMAGE", pdf.image!!)
             binding.bookImage.visibility = View.VISIBLE
             Glide.with(this).load(storageRef.child(pdf.image!!)).into(binding.bookImage)
+
+            val user = Firebase.auth.currentUser!!.uid
+            viewModel.userOwnsBook.value = false
+            if (user == pdf.posterId) {
+                viewModel.userOwnsBook.value = true
+            } else {
+                dbRef.collection("pdfs/${pdf.pdfId}/owners")
+                    .whereEqualTo("userId", user).get()
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            viewModel.userOwnsBook.value = it.result.size() > 0
+                        } else {
+                            Snackbar.make(
+                                requireActivity().findViewById(android.R.id.content),
+                                "Error: ${it.exception?.message}",
+                                Snackbar.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+            }
         }
 
-        userOwnsBook.observe(viewLifecycleOwner) { owns ->
+        viewModel.userOwnsBook.observe(viewLifecycleOwner) { owns ->
             if (owns) {
                 binding.purchaseReadButton.text = "Read"
                 binding.purchaseReadButton.setOnClickListener {
-
+                    findNavController().navigate(R.id.action_pdfDetailFragment2_to_pdfViewFragment)
                 }
             } else {
                 binding.purchaseReadButton.text = "Purchase ${viewModel.pdf.value?.price} RS"
                 binding.purchaseReadButton.setOnClickListener {
-
+                    findNavController().navigate(R.id.action_pdfDetailFragment2_to_paymentFragment)
                 }
             }
         }

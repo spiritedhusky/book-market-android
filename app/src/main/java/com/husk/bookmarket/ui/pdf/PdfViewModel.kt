@@ -7,8 +7,10 @@ import com.husk.bookmarket.model.Pdf
 
 class PdfViewModel : ViewModel() {
 
-    private val _pdf = MutableLiveData<Pdf>().apply {
+    val pdf = MutableLiveData<Pdf>().apply {
         value = null
     }
-    val pdf: MutableLiveData<Pdf> = _pdf
+    val userOwnsBook = MutableLiveData<Boolean>().apply {
+        value = false
+    }
 }
