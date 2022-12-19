@@ -3,11 +3,10 @@ package com.husk.bookmarket.ui.chat
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import com.husk.bookmarket.model.ChatThread
 
 class ChatViewModel : ViewModel() {
-
-    private val _text = MutableLiveData<String>().apply {
-        value = "This is the Chat Fragment"
+    val thread = MutableLiveData<ChatThread>().apply {
+        value = null
     }
-    val text: LiveData<String> = _text
 }

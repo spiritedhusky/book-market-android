@@ -15,6 +15,14 @@
             app:destination="@id/navigation_add_post"
             app:enterAnim="@anim/fui_slide_in_right"
             app:exitAnim="@anim/fui_slide_out_left" />
+        <action
+            android:id="@+id/action_navigation_home_to_chat"
+            app:destination="@id/navigation_chat" />
+        <action
+            android:id="@+id/action_navigation_home_to_chatViewFragment"
+            app:destination="@id/chatViewFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left" />
     </fragment>
 
     <fragment
@@ -38,7 +46,13 @@
         android:id="@+id/navigation_chat"
         android:name="com.husk.bookmarket.ui.chat.ChatFragment"
         android:label="Chat"
-        tools:layout="@layout/fragment_chat" />
+        tools:layout="@layout/fragment_chat" >
+        <action
+            android:id="@+id/action_navigation_chat_to_chatViewFragment"
+            app:destination="@id/chatViewFragment"
+            app:enterAnim="@anim/fui_slide_in_right"
+            app:exitAnim="@anim/fui_slide_out_left" />
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_profile"
@@ -102,4 +116,8 @@
         android:name="com.husk.bookmarket.ui.pdf.PdfViewFragment"
         android:label="fragment_pdf_view"
         tools:layout="@layout/fragment_pdf_view" />
+    <fragment
+        android:id="@+id/chatViewFragment"
+        android:name="com.husk.bookmarket.ui.chat.ChatViewFragment"
+        android:label="ChatViewFragment" />
 </navigation>

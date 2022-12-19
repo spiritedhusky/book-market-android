@@ -5,17 +5,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.activityViewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
+import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.DocumentChange
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
+import com.google.firebase.ktx.Firebase
 import com.husk.bookmarket.R
 import com.husk.bookmarket.databinding.FragmentHomeBinding
+import com.husk.bookmarket.model.ChatThread
 import com.husk.bookmarket.model.Post
+import com.husk.bookmarket.ui.chat.ChatViewModel
 
 class HomeFragment : Fragment() {
 
@@ -28,14 +33,25 @@ class HomeFragment : Fragment() {
     private val posts: ArrayList<Post> = ArrayList();
     private val adapter = PostAdapter(posts, this)
 
-    private val postsRef = FirebaseFirestore.getInstance().collection("posts")
+    private val db = FirebaseFirestore.getInstance()
+    private val postsRef = db.collection("posts")
 
     private lateinit var registration: ListenerRegistration
+
+    val viewModel: ChatViewModel by activityViewModels()
+
+    fun showError(e: java.lang.Exception?) {
+        Snackbar.make(
+            requireActivity().findViewById(android.R.id.content),
+            "Error occurred: ${e?.message}",
+            Snackbar.LENGTH_SHORT
+        ).show()
+    }
+
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
     ): View {
-        val homeViewModel = ViewModelProvider(this).get(HomeViewModel::class.java)
 
         _binding = FragmentHomeBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -57,8 +73,8 @@ class HomeFragment : Fragment() {
                 } else {
                     for (dc in snapshots!!.documentChanges) {
                         if (dc.type == DocumentChange.Type.ADDED) {
-                            posts.add(Post.fromDoc(dc.document))
-                            adapter.notifyItemInserted(posts.size - 1)
+                            posts.add(0, Post.fromDoc(dc.document))
+                            adapter.notifyItemInserted(0)
                         }
                     }
                 }

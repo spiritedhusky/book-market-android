@@ -13,8 +13,10 @@
         android:layout_height="56dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:visibility="invisible"
         android:layout_marginBottom="16dp"
         android:src="@drawable/profile_icon"
+        android:elevation="10dp"
         app:civ_border_color="@color/black"
         app:civ_border_width="3dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -36,7 +38,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/textView3"
+        android:id="@+id/username"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -48,7 +50,7 @@
         app:layout_constraintTop_toTopOf="@+id/profile" />
 
     <TextView
-        android:id="@+id/textView4"
+        android:id="@+id/lastText"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
@@ -58,6 +60,6 @@
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toEndOf="@+id/profile"
-        app:layout_constraintTop_toBottomOf="@+id/textView3" />
+        app:layout_constraintTop_toBottomOf="@+id/username" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

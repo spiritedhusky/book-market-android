@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
@@ -17,13 +16,15 @@ import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
 import com.husk.bookmarket.R
 import com.husk.bookmarket.databinding.ChatEntryBinding
+import com.husk.bookmarket.databinding.MessageBoxBinding
 import com.husk.bookmarket.databinding.PostCardBinding
+import com.husk.bookmarket.model.ChatMessage
 import com.husk.bookmarket.model.ChatThread
 import com.husk.bookmarket.model.Pdf
 import com.husk.bookmarket.model.Post
 
-class ChatThreadAdapter(private val threads: ArrayList<ChatThread>, private val fragment: ChatFragment) :
-    RecyclerView.Adapter<ChatThreadAdapter.ViewHolder>() {
+class ChatMessageAdapter(private val texts: ArrayList<ChatMessage>, private val fragment: ChatViewFragment) :
+    RecyclerView.Adapter<ChatMessageAdapter.ViewHolder>() {
 
     /**
      * Provide a reference to the type of views that you are using
@@ -31,21 +32,18 @@ class ChatThreadAdapter(private val threads: ArrayList<ChatThread>, private val 
      */
 
 
-    class ViewHolder(private val binding: ChatEntryBinding, private val fragment: ChatFragment) :
+    class ViewHolder(private val binding: MessageBoxBinding, private val fragment: ChatViewFragment) :
         RecyclerView.ViewHolder(binding.root) {
         private val storageRef = Firebase.storage.reference
-        fun bind(thread: ChatThread) {
-            if (thread.userAvatar != null) {
-                binding.profile.setImageURI(thread.userAvatar)
-                binding.profile.visibility = View.VISIBLE
+        fun bind(message: ChatMessage) {
+            if(message.isCurrentUser){
+                binding.cardL.visibility = View.GONE;
+                binding.cardR.visibility = View.VISIBLE;
+                binding.messageR.text = message.content
             } else {
-                binding.profile.visibility = View.INVISIBLE
-            }
-            binding.username.text = thread.userName
-            binding.lastText.text = thread.lastText
-            binding.root.setOnClickListener{
-                fragment.viewModel.thread.value = thread
-                fragment.findNavController().navigate(R.id.action_navigation_chat_to_chatViewFragment)
+                binding.cardR.visibility = View.GONE;
+                binding.cardL.visibility = View.VISIBLE;
+                binding.messageL.text = message.content
             }
         }
     }
@@ -55,7 +53,7 @@ class ChatThreadAdapter(private val threads: ArrayList<ChatThread>, private val 
     override fun onCreateViewHolder(viewGroup: ViewGroup, viewType: Int): ViewHolder {
         // Create a new view, which defines the UI of the list item
         val inflater = LayoutInflater.from(viewGroup.context)
-        val binding = ChatEntryBinding.inflate(inflater, viewGroup, false)
+        val binding = MessageBoxBinding.inflate(inflater, viewGroup, false)
 
         return ViewHolder(binding, fragment)
     }
@@ -64,10 +62,10 @@ class ChatThreadAdapter(private val threads: ArrayList<ChatThread>, private val 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
         // Get element from your dataset at this position and replace the
         // contents of the view with that element
-        viewHolder.bind(threads[position])
+        viewHolder.bind(texts[position])
     }
 
     // Return the size of your dataset (invoked by the layout manager)
-    override fun getItemCount() = threads.size
+    override fun getItemCount() = texts.size
 
 }
