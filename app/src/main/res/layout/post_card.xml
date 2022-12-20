@@ -28,7 +28,7 @@
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/profileImage"
                 android:layout_width="35dp"
-                android:elevation="10dp"
+                android:elevation="1dp"
                 android:layout_height="35dp"
                 android:src="@drawable/profile_icon"
                 android:visibility="invisible"
