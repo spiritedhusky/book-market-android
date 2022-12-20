@@ -13,6 +13,7 @@ import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import com.husk.bookmarket.GlideApp
 import com.husk.bookmarket.R
 import com.husk.bookmarket.databinding.PdfCardBinding
 import com.husk.bookmarket.model.Pdf
@@ -31,7 +32,7 @@ class PdfAdapter(private val pdfs: ArrayList<Pdf>, private val fragment: PdfFrag
 
         fun bind(pdf: Pdf) {
             if (pdf.posterAvatar != null) {
-                binding.profileImage.setImageURI(pdf.posterAvatar)
+                Glide.with(fragment).load(pdf.posterAvatar).into(binding.profileImage)
                 binding.profileImage.visibility = View.VISIBLE
             } else {
                 binding.profileImage.visibility = View.GONE

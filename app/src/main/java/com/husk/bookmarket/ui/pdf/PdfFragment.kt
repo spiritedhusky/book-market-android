@@ -66,7 +66,7 @@ class PdfFragment : Fragment() {
 //        }
         binding.recyclerView.adapter = adapter
 
-        registration = pdfsRef.orderBy("timestamp", Query.Direction.DESCENDING)
+        registration = pdfsRef.orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     Snackbar.make(
@@ -77,8 +77,8 @@ class PdfFragment : Fragment() {
                 } else {
                     for (dc in snapshots!!.documentChanges) {
                         if (dc.type == DocumentChange.Type.ADDED) {
-                            pdfs.add(Pdf.fromDoc(dc.document))
-                            adapter.notifyItemInserted(pdfs.size - 1)
+                            pdfs.add(0, Pdf.fromDoc(dc.document))
+                            adapter.notifyItemInserted(0)
                         }
                     }
                 }

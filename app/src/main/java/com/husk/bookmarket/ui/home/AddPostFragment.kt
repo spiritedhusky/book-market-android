@@ -135,6 +135,9 @@ class AddPostFragment : Fragment() {
             submitPost()
         }
 
+        binding.cancelButton.setOnClickListener{
+            findNavController().popBackStack()
+        }
         return root
     }
 

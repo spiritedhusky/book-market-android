@@ -178,6 +178,9 @@ class AddPdfFragment : Fragment() {
         binding.postButton.setOnClickListener {
             submitPost()
         }
+        binding.cancelButton.setOnClickListener {
+            findNavController().popBackStack()
+        }
 
         return binding.root
     }

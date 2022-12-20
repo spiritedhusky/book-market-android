@@ -20,7 +20,7 @@ data class Post(
     companion object Factory {
         fun fromDoc(doc: DocumentSnapshot): Post {
             var avatar: Uri? = null
-            doc.getString("postAvatar")?.let { avatar = Uri.parse(it) }
+            doc.getString("posterAvatar")?.let { avatar = Uri.parse(it) }
             return Post(
                 doc.id,
                 doc.getString("posterId")!!,

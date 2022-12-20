@@ -21,7 +21,7 @@ data class Pdf(
     companion object Factory {
         fun fromDoc(doc: DocumentSnapshot): Pdf {
             var avatar: Uri? = null
-            doc.getString("postAvatar")?.let { avatar = Uri.parse(it) }
+            doc.getString("posterAvatar")?.let { avatar = Uri.parse(it) }
             return Pdf(
                 doc.id,
                 doc.getString("pdf")!!,

@@ -1,13 +1,14 @@
 package com.husk.bookmarket.ui.chat
 
 import android.os.Bundle
-import android.os.Message
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.LifecycleOwner
+import com.bumptech.glide.Glide
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
@@ -16,10 +17,8 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.firestore.ListenerRegistration
 import com.google.firebase.firestore.Query
 import com.google.firebase.ktx.Firebase
-import com.husk.bookmarket.R
 import com.husk.bookmarket.databinding.FragmentChatViewBinding
 import com.husk.bookmarket.model.ChatMessage
-import com.husk.bookmarket.model.Post
 
 
 class ChatViewFragment : Fragment() {
@@ -49,8 +48,9 @@ class ChatViewFragment : Fragment() {
         binding.recyclerView.adapter = adapter
 
         viewModel.thread.observe(viewLifecycleOwner) { thread ->
+            val user = Firebase.auth.currentUser!!
             if (thread.userAvatar != null) {
-                binding.profile.setImageURI(thread.userAvatar)
+                Glide.with(this).load(thread.userAvatar).into(binding.profile)
                 binding.profile.visibility = View.VISIBLE
             } else {
                 binding.profile.visibility = View.INVISIBLE
@@ -119,6 +119,22 @@ class ChatViewFragment : Fragment() {
 
 
         return binding.root
+    }
+
+    override fun onResume() {
+        super.onResume()
+        (requireActivity() as AppCompatActivity).apply{
+            supportActionBar?.hide()
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_RESIZE)
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as AppCompatActivity).apply{
+            supportActionBar?.show()
+            window.setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_ADJUST_PAN)
+        }
     }
 
     override fun onDestroyView() {

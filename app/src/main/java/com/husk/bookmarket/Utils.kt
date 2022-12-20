@@ -29,7 +29,7 @@ object Utils {
         }
         val scaledBitmap = Bitmap.createScaledBitmap(bitmap, width, height, true)
         val baos = ByteArrayOutputStream()
-        scaledBitmap.compress(Bitmap.CompressFormat.PNG, 50, baos)
+        scaledBitmap.compress(Bitmap.CompressFormat.PNG, 60, baos)
         return baos.toByteArray()
     }
 

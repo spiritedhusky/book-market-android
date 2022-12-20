@@ -16,6 +16,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
+import com.husk.bookmarket.GlideApp
 import com.husk.bookmarket.R
 import com.husk.bookmarket.databinding.PostCardBinding
 import com.husk.bookmarket.model.ChatThread
@@ -92,7 +93,7 @@ class PostAdapter(private val posts: ArrayList<Post>, private val fragment: Home
 
         fun bind(post: Post) {
             if (post.posterAvatar != null) {
-                binding.profileImage.setImageURI(post.posterAvatar)
+                Glide.with(fragment).load(post.posterAvatar).into(binding.profileImage)
                 binding.profileImage.visibility = View.VISIBLE
             } else {
                 binding.profileImage.visibility = View.GONE

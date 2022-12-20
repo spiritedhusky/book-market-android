@@ -15,6 +15,7 @@ import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
+import com.husk.bookmarket.GlideApp
 import com.husk.bookmarket.R
 import com.husk.bookmarket.databinding.ChatEntryBinding
 import com.husk.bookmarket.databinding.PostCardBinding
@@ -35,8 +36,9 @@ class ChatThreadAdapter(private val threads: ArrayList<ChatThread>, private val 
         RecyclerView.ViewHolder(binding.root) {
         private val storageRef = Firebase.storage.reference
         fun bind(thread: ChatThread) {
+            val user = Firebase.auth.currentUser!!
             if (thread.userAvatar != null) {
-                binding.profile.setImageURI(thread.userAvatar)
+                Glide.with(fragment).load(thread.userAvatar).into(binding.profile)
                 binding.profile.visibility = View.VISIBLE
             } else {
                 binding.profile.visibility = View.INVISIBLE

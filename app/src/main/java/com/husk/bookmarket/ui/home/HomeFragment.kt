@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
 
         binding.recyclerView.adapter = adapter
 
-        registration = postsRef.orderBy("timestamp", Query.Direction.DESCENDING)
+        registration = postsRef.orderBy("timestamp", Query.Direction.ASCENDING)
             .addSnapshotListener { snapshots, e ->
                 if (e != null) {
                     Snackbar.make(
