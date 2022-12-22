@@ -1,11 +1,15 @@
 package com.husk.bookmarket
 
+import android.app.Activity
 import android.content.ContentResolver
+import android.content.Context
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.provider.OpenableColumns
+import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import java.io.ByteArrayOutputStream
 import kotlin.math.roundToInt
 
@@ -44,5 +48,11 @@ object Utils {
         val name: String = returnCursor.getString(nameIndex)
         returnCursor.close()
         return name
+    }
+    fun showSnackBar(activity: Activity, message: String){
+        Snackbar.make(activity.findViewById(android.R.id.content), message, Snackbar.LENGTH_SHORT).show()
+    }
+    fun showToast(context: Context, message: String){
+        Toast.makeText(context, message, Toast.LENGTH_SHORT).show()
     }
 }

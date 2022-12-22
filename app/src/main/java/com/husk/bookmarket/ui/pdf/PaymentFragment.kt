@@ -36,8 +36,7 @@ class PaymentFragment : Fragment() {
 
         viewModel.pdf.observe(viewLifecycleOwner) { pdf ->
             binding.bookTitle.text = pdf.title
-            binding.bookPrice.text = String.format("%.2f RS", pdf.price)
-
+            binding.bookPrice.text = String.format("%.2f BDT", pdf.price)
         }
 
         binding.payButton.setOnClickListener {

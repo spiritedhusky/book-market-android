@@ -10,6 +10,7 @@ import android.widget.TextView
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.Timestamp
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -18,6 +19,7 @@ import com.google.firebase.storage.ktx.storage
 import com.google.firebase.storage.ktx.storageMetadata
 import com.husk.bookmarket.GlideApp
 import com.husk.bookmarket.R
+import com.husk.bookmarket.Utils
 import com.husk.bookmarket.databinding.PostCardBinding
 import com.husk.bookmarket.model.ChatThread
 import com.husk.bookmarket.model.Pdf
@@ -38,13 +40,12 @@ class PostAdapter(private val posts: ArrayList<Post>, private val fragment: Home
         val db = FirebaseFirestore.getInstance()
 
         /* Search for existing thread between users, create one if for both sides if not present */
-        fun selectThread(post: Post) {
+        private fun selectThread(post: Post) {
             val user = Firebase.auth.currentUser!!
             val receiverId = post.posterId
 
             db.collection("chat_threads/${user.uid}/threads").whereEqualTo("userId", receiverId)
-                .get()
-                .addOnCompleteListener {
+                .get().addOnCompleteListener {
                     if (!it.isSuccessful) {
                         fragment.showError(it.exception)
                         binding.chatButton.isClickable = true
@@ -63,12 +64,7 @@ class PostAdapter(private val posts: ArrayList<Post>, private val fragment: Home
                             Timestamp.now()
                         )
                         val threadV = ChatThread(
-                            v.id,
-                            user.uid,
-                            user.displayName!!,
-                            user.photoUrl,
-                            null,
-                            Timestamp.now()
+                            v.id, user.uid, user.displayName!!, user.photoUrl, null, Timestamp.now()
                         )
                         db.runBatch { batch ->
                             batch.set(u, threadU.toMap())
@@ -91,6 +87,20 @@ class PostAdapter(private val posts: ArrayList<Post>, private val fragment: Home
                 }
         }
 
+        private fun deletePost(post: Post) {
+            db.collection("posts").document(post.postId).delete().addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    binding.deleteButton.isClickable = true
+                    Utils.showSnackBar(
+                        fragment.requireActivity(),
+                        "Failed to delete post: ${it.exception?.message}"
+                    )
+                } else {
+                    Utils.showToast(fragment.requireActivity(), "Successfully deleted post")
+                }
+            }
+        }
+
         fun bind(post: Post) {
             if (post.posterAvatar != null) {
                 Glide.with(fragment).load(post.posterAvatar).into(binding.profileImage)
@@ -109,14 +119,23 @@ class PostAdapter(private val posts: ArrayList<Post>, private val fragment: Home
             } else {
                 binding.bookImage.visibility = View.GONE
             }
-
-            binding.chatButton.isClickable = true
-            binding.chatButton.setOnClickListener {
-                if(post.posterId == Firebase.auth.currentUser!!.uid){
-                    return@setOnClickListener;
+            val user = Firebase.auth.currentUser!!
+            if (post.posterId == user.uid) {
+                binding.chatButton.visibility = View.GONE
+                binding.deleteButton.visibility = View.VISIBLE
+                binding.deleteButton.isClickable = true
+                binding.deleteButton.setOnClickListener {
+                    binding.deleteButton.isClickable = false
+                    deletePost(post)
                 }
-                binding.chatButton.isClickable = false
-                selectThread(post)
+            } else {
+                binding.deleteButton.visibility = View.GONE
+                binding.chatButton.visibility = View.VISIBLE
+                binding.chatButton.isClickable = true
+                binding.chatButton.setOnClickListener {
+                    binding.chatButton.isClickable = false
+                    selectThread(post)
+                }
             }
         }
     }

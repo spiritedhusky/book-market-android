@@ -12,9 +12,11 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import com.bumptech.glide.Glide
+import com.firebase.ui.auth.AuthUI
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.auth.ktx.userProfileChangeRequest
@@ -26,6 +28,7 @@ import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.husk.bookmarket.GlideApp
 import com.husk.bookmarket.R
+import com.husk.bookmarket.SignInActivity
 import com.husk.bookmarket.Utils
 import com.husk.bookmarket.databinding.FragmentProfileBinding
 import java.util.UUID
@@ -280,6 +283,13 @@ class ProfileFragment : Fragment() {
             Glide.with(this).load(user.photoUrl).into(binding.profile)
         } else {
             binding.profile.setImageResource(R.drawable.profile_icon)
+        }
+
+        binding.logoutButton.setOnClickListener {
+            AuthUI.getInstance().signOut(requireContext()).addOnCompleteListener {
+                startActivity(Intent(requireContext(), SignInActivity::class.java))
+                requireActivity().finish()
+            }
         }
 
         binding.imageButton.setOnClickListener {

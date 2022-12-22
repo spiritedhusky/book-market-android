@@ -75,6 +75,17 @@ class HomeFragment : Fragment() {
                         if (dc.type == DocumentChange.Type.ADDED) {
                             posts.add(0, Post.fromDoc(dc.document))
                             adapter.notifyItemInserted(0)
+                        } else if(dc.type == DocumentChange.Type.REMOVED){
+                            var del = -1
+                            posts.forEachIndexed { idx, post ->
+                                if (post.postId == dc.document.id) {
+                                    del = idx
+                                }
+                            }
+                            if (del >= 0) {
+                                posts.removeAt(del)
+                                adapter.notifyItemRemoved(del)
+                            }
                         }
                     }
                 }

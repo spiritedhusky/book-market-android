@@ -50,20 +50,6 @@ class PdfFragment : Fragment() {
         _binding = FragmentPdfBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-//        root.pdfButton.setOnClickListener {
-//            val localFile = File.createTempFile("sample", "pdf")
-//
-//            pdfRef.getFile(localFile).addOnSuccessListener {
-//                // Local temp file has been created
-//                root.pdfView.fromFile(localFile).show()
-//            }.addOnFailureListener {
-//                Snackbar.make(
-//                    requireActivity().findViewById(android.R.id.content),
-//                    "Couldn't download PDF: ${it.message}",
-//                    Snackbar.LENGTH_SHORT
-//                ).show()
-//            }
-//        }
         binding.recyclerView.adapter = adapter
 
         registration = pdfsRef.orderBy("timestamp", Query.Direction.ASCENDING)
@@ -79,19 +65,30 @@ class PdfFragment : Fragment() {
                         if (dc.type == DocumentChange.Type.ADDED) {
                             pdfs.add(0, Pdf.fromDoc(dc.document))
                             adapter.notifyItemInserted(0)
+                        } else if (dc.type == DocumentChange.Type.REMOVED) {
+                            var del = -1
+                            pdfs.forEachIndexed { idx, pdf ->
+                                if (pdf.pdfId == dc.document.id) {
+                                    del = idx
+                                }
+                            }
+                            if (del >= 0) {
+                                pdfs.removeAt(del)
+                                adapter.notifyItemRemoved(del)
+                            }
                         }
                     }
                 }
             }
 
-        binding.addPdfButton.setOnClickListener{
+        binding.addPdfButton.setOnClickListener {
             findNavController().navigate(R.id.action_navigation_pdf_to_addPdfFragment)
         }
 
         return root
     }
 
-    public fun setPdf(pdf: Pdf){
+    public fun setPdf(pdf: Pdf) {
         viewModel.pdf.value = pdf
     }
 

@@ -137,6 +137,18 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/imageCard" />
 
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="70dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:background="@color/fui_transparent"
+                android:contentDescription="chat"
+                android:drawableEnd="@drawable/delete"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.cardview.widget.CardView>

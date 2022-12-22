@@ -81,7 +81,7 @@ class PdfDetailFragment : Fragment() {
                     findNavController().navigate(R.id.action_pdfDetailFragment2_to_pdfViewFragment)
                 }
             } else {
-                binding.purchaseReadButton.text = "Purchase ${viewModel.pdf.value?.price} RS"
+                binding.purchaseReadButton.text = "Purchase ${viewModel.pdf.value?.price} BDT"
                 binding.purchaseReadButton.setOnClickListener {
                     findNavController().navigate(R.id.action_pdfDetailFragment2_to_paymentFragment)
                 }

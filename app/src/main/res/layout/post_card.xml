@@ -125,11 +125,22 @@
 
             <Button
                 android:id="@+id/chatButton"
-                android:layout_width="wrap_content"
+                android:layout_width="70dp"
                 android:layout_height="wrap_content"
                 android:background="@color/fui_transparent"
                 android:contentDescription="chat"
                 android:drawableEnd="@drawable/chat_icon"
+                app:layout_constraintEnd_toStartOf="@+id/deleteButton"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/deleteButton"
+                android:layout_width="70dp"
+                android:visibility="gone"
+                android:layout_height="wrap_content"
+                android:background="@color/fui_transparent"
+                android:contentDescription="chat"
+                android:drawableEnd="@drawable/delete"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 

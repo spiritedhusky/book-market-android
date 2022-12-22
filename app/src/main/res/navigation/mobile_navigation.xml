@@ -21,8 +21,8 @@
         <action
             android:id="@+id/action_navigation_home_to_chatViewFragment"
             app:destination="@id/chatViewFragment"
-            app:enterAnim="@anim/fui_slide_in_right"
-            app:exitAnim="@anim/fui_slide_out_left" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
     <fragment
@@ -50,8 +50,8 @@
         <action
             android:id="@+id/action_navigation_chat_to_chatViewFragment"
             app:destination="@id/chatViewFragment"
-            app:enterAnim="@anim/fui_slide_in_right"
-            app:exitAnim="@anim/fui_slide_out_left" />
+            app:enterAnim="@android:anim/fade_in"
+            app:exitAnim="@android:anim/fade_out" />
     </fragment>
 
     <fragment
@@ -73,7 +73,7 @@
     <fragment
         android:id="@+id/addPdfFragment"
         android:name="com.husk.bookmarket.ui.pdf.AddPdfFragment"
-        android:label="fragment_add_pdf"
+        android:label="Add PDF"
         tools:layout="@layout/fragment_add_pdf" >
         <action
             android:id="@+id/action_addPdfFragment_to_navigation_pdf"
@@ -84,7 +84,7 @@
     <fragment
         android:id="@+id/pdfDetailFragment2"
         android:name="com.husk.bookmarket.ui.pdf.PdfDetailFragment"
-        android:label="PdfDetailFragment" >
+        android:label="PDF Detail" >
         <action
             android:id="@+id/action_pdfDetailFragment2_to_navigation_pdf"
             app:destination="@id/navigation_pdf"
@@ -103,7 +103,7 @@
     <fragment
         android:id="@+id/paymentFragment"
         android:name="com.husk.bookmarket.ui.pdf.PaymentFragment"
-        android:label="fragment_payment"
+        android:label="Payment"
         tools:layout="@layout/fragment_payment" >
         <action
             android:id="@+id/action_paymentFragment_to_pdfDetailFragment2"
@@ -114,10 +114,10 @@
     <fragment
         android:id="@+id/pdfViewFragment"
         android:name="com.husk.bookmarket.ui.pdf.PdfViewFragment"
-        android:label="fragment_pdf_view"
+        android:label="View PDF"
         tools:layout="@layout/fragment_pdf_view" />
     <fragment
         android:id="@+id/chatViewFragment"
         android:name="com.husk.bookmarket.ui.chat.ChatViewFragment"
-        android:label="ChatViewFragment" />
+        android:label="Chat" />
 </navigation>

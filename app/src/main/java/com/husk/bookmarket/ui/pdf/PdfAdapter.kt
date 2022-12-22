@@ -11,10 +11,12 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.auth.ktx.auth
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 import com.husk.bookmarket.GlideApp
 import com.husk.bookmarket.R
+import com.husk.bookmarket.Utils
 import com.husk.bookmarket.databinding.PdfCardBinding
 import com.husk.bookmarket.model.Pdf
 import com.husk.bookmarket.model.Post
@@ -29,7 +31,20 @@ class PdfAdapter(private val pdfs: ArrayList<Pdf>, private val fragment: PdfFrag
     class ViewHolder(private val binding: PdfCardBinding, private val fragment: PdfFragment) : RecyclerView.ViewHolder(binding.root) {
 
         private val storageRef = Firebase.storage.reference
-
+        private val db = FirebaseFirestore.getInstance()
+        private fun deletePdf(pdf: Pdf) {
+            db.collection("pdfs").document(pdf.pdfId).delete().addOnCompleteListener {
+                if (!it.isSuccessful) {
+                    binding.deleteButton.isClickable = true
+                    Utils.showSnackBar(
+                        fragment.requireActivity(),
+                        "Failed to delete pdf: ${it.exception?.message}"
+                    )
+                } else {
+                    Utils.showToast(fragment.requireActivity(), "Successfully deleted pdf")
+                }
+            }
+        }
         fun bind(pdf: Pdf) {
             if (pdf.posterAvatar != null) {
                 Glide.with(fragment).load(pdf.posterAvatar).into(binding.profileImage)
@@ -45,6 +60,18 @@ class PdfAdapter(private val pdfs: ArrayList<Pdf>, private val fragment: PdfFrag
                 binding.bookImage.visibility = View.VISIBLE
             } else {
                 binding.bookImage.visibility = View.GONE
+            }
+            val user = Firebase.auth.currentUser!!
+
+            if(pdf.posterId == user.uid){
+                binding.deleteButton.visibility = View.VISIBLE
+                binding.deleteButton.isClickable = true
+                binding.deleteButton.setOnClickListener{
+                    binding.deleteButton.isClickable = false
+                    deletePdf(pdf)
+                }
+            } else {
+                binding.deleteButton.visibility = View.GONE
             }
 
             binding.detailsButton.setOnClickListener {
